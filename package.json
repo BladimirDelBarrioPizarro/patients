@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/BladimirDelBarrioPizarro/patients#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4"
   }
 }
