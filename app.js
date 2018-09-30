@@ -2,26 +2,28 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
-
 const app = express()
 const port = process.env.PORT || 3000
 
 
-const Patient = require('./app/models/patient')
-
-const client = require('./config/db')
-
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-//controllers
+// routes
+require('./config/routes.js')(app)
+
+app.listen(port, () => {
+	console.log(`API REST patient in http://localhost:${port}`)
+})
+
+/*//controllers
 app.get('/patient/',(req,res) => {
 	
 	
-	/*res.status(200).send({patient:[]})
+	res.status(200).send({patient:[]})
 	
 	const resp = client.query("SELECT * FROM patient");
-    console.log(resp);*/
+    console.log(resp);
 	
 })
 
@@ -66,12 +68,10 @@ app.put('/patient/:id',(req,res) => {
 
 app.put('/patient/:id',(req,res) => {
 	
-})
-
-app.listen(port, () => {
-	console.log(`API REST patient in http://localhost:${port}`)
-})
+})*/
 
 
 
 
+
+exports = module.exports = app;
