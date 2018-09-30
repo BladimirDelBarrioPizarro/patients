@@ -19,14 +19,14 @@ exports.getPatients =  (req, res, next) => {
 
 
 
-exports.createPatient =  (req, res, next) => {
+exports.createPatient = async  (req, res, next) => {
 	console.log('Controller createPatient')
 	console.log(req.body);
     const patientModel = new PatientModel(req.body);
     let patient = req.body;
    
     try {
-    	patient.id = patientModel.create();  
+    	patient = await patientModel.create();  
     } catch (error) {
         return next(new Error('Error creating patient.'))
     }

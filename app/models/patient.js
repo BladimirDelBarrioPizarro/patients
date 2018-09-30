@@ -29,10 +29,11 @@ class patientModel{
 	        	const sqlQuery = ` SELECT  * FROM patient `;
 	        	
 	            database.query(sqlQuery, (error, results, fields) => {
-	            	 if (err) {
-	        			    console.log(err.stack)
+	            	 if (error) {
+	        			    console.log(error.stack)
 	        			  } else {
-	        			    console.log(res.rows[0].nombre)
+	        			    console.log(results.rows[0].nombre)
+	        			    resolve(results);
 	        			  }
 	            });
 	        });
@@ -81,4 +82,4 @@ class patientModel{
     
 }
 
-module.exports=patientModel;
+module.exports = patientModel;

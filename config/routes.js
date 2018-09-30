@@ -5,7 +5,7 @@ module.exports = function(app){
 	
 //	app.post('/login', userController.login);
 	
-	app.get('/patients',patientController.getAll);
+	app.get('/patients',patientController.getPatients);
 	app.post('/patient/',patientController.createPatient);
 	
 }
