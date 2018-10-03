@@ -28,15 +28,13 @@ class patientModel{
 	        	console.log('getAll');
 	        	const sqlQuery = `SELECT p.id, p.user_id, p.nombre, p.apellido, p.dni, p.telefono, p.direccion, p.localidad, p.profesion, p.email, p.valoracion, p.exploracion, p.diagnostico, p.tratamiento  FROM patient p`;
 	        	console.log(sqlQuery);
-	            database.query(sqlQuery, (error, results, fields) => {
-	            	 if(!error) {
-	        			    //console.log(results.rows[0].nombre);
-	        			    //console.log(results.rows[1].nombre);
-	        			    resolve(results);
-	        			  } else {
-	        				  console.log(error.stack)
-		        			    reject(error);
-	        			  }
+	        	database.query(sqlQuery, (error, results, fields) => {
+	                if (!error) {
+	                	console.log(results.rows[0].id);
+	                    resolve(results);
+	                } else {
+	                    reject(error);
+	                }
 	            });
 	        });
 	    };
