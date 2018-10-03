@@ -6,6 +6,7 @@ module.exports = function(app){
 //	app.post('/login', userController.login);
 	
 	app.get('/patients',patientController.getPatients);
+	app.get('/patient/:id',patientController.getPatient);
 	app.post('/patient/',patientController.createPatient);
-	
+	app.put('/patient/',patientController.updatePatient);
 }
