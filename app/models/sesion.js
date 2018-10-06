@@ -32,7 +32,6 @@ class sesionModel{
     
     get(){
 		return new Promise((resolve, reject) => {
-			
 			const sqlQuery=`SELECT  s.id, s.fecha, s.paciente_id, s.diagnostico  FROM sesion s where id = ${this.id}`;
             console.log(sqlQuery);
 			database.query(sqlQuery, (error, results, fields) => {
