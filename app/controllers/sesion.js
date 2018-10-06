@@ -1,0 +1,68 @@
+'use strict'
+
+const SesionModel = require('../models/sesion');
+
+
+
+exports.getSesions =  (req, res, next) => {
+    const sesionModel = new SesionModel();
+    let sesions = [];
+
+    try {
+        sesions =  sesionModel.getAll();
+    } catch (error) {
+        return next(new Error('Error getting sesion list.'))
+    }
+
+    return res.status(200).send(sesions);
+}
+
+
+exports.getSesion = async (req, res, next) => {
+    const sesionModel = new SesionModel({ id: req.params.id });
+
+    let sesion = {};
+
+    try {
+        sesion = await sesionModel.get();
+    } catch (error) {
+        return next(new Error('Error getting sesion.'))
+    }
+
+    return res.status(200).send(sesion);
+}
+
+
+exports.createSesion = async  (req, res, next) => {
+	console.log('Controller createSesion')
+    const sesionModel = new SesionModel(req.body);
+    
+    let sesion = req.body;
+   
+    try {
+    	sesion.id= await sesionModel.create();  
+    } catch (error) {
+        return next(new Error('Error creating sesion.'))
+    }
+
+    return res.status(200).send(sesion);
+}
+
+exports.updateSesion = async (req, res, next) => {
+    const sesionModel = new SesionModel(req.body);
+    let sesion = req.body;
+    let affectedRows = 0;
+    console.log(sesion);
+    try {
+        affectedRows = await sesionModel.update();
+    } catch (error) {
+        return next(new Error('Error updating sesion.'))
+    }
+
+    if (affectedRows === 0) {
+        return next(new Error('Sesion not found.'))
+    } else {
+        return res.status(200).send(sesion);
+    }
+}
+
