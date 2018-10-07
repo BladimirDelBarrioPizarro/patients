@@ -18,10 +18,9 @@ class userModel{
 	        	console.log(sqlQuery);
 	            database.query(sqlQuery, (error, results, fields) => {
 	                if (!error) {
-	                	console.log(results);
-	                    if (results.rowCount === 1) { // && bcrypt.compareSync(this.password, results[0].password)
-	                        //delete results[0].password;
-	                        //resolve(results[0]);
+	                    if (results.rowCount === 1  && bcrypt.compareSync(this.password, results.rows[0].password)) { //
+	                        delete results.rows[0].password;
+	                      //  resolve(results[0]);
 	                        resolve(true)
 	                    } else {
 	                        resolve(false)

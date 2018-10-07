@@ -3,6 +3,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 const UserModel = require('../models/user.js');
+const constants = require('../../config/constants.js');
 
 exports.login = async (req, res, next) => {
     const userModel = new UserModel(req.body);
@@ -32,7 +33,7 @@ exports.login = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
     const userModel = new UserModel({ id: req.params.id });
     let user = {};
-  /*  if (req.user.profileId > 1 && req.params.userId != req.user.id) {
+  /*  if (req.user.profileId > 1 && req.params.id != req.user.id) {
         return next(new Error('Error. Insufficient access rights.'))
     }
 */
