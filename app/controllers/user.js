@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt-nodejs');
 const UserModel = require('../models/user.js');
 const constants = require('../../config/constants.js');
 
+var token;
 exports.login = async (req, res, next) => {
     const userModel = new UserModel(req.body);
     let authenticated = null;
@@ -18,8 +19,8 @@ exports.login = async (req, res, next) => {
     
     console.log('authenticated '+authenticated);
     if (authenticated) {
-        const token = jwt.sign({ user: authenticated }, constants.jwtSecret, { expiresIn: constants.jwtExpirationTime });
-        res.setHeader('Authorization', 'Bearer ' + token);
+        token = jwt.sign({ user: authenticated }, constants.jwtSecret, { expiresIn: constants.jwtExpirationTime });
+        res.setHeader('Authorization', token);
         return res.status(200).send();
     } else {
         const error = new Error('Invalid credentials.');
@@ -33,13 +34,15 @@ exports.getUser = async (req, res, next) => {
     const userModel = new UserModel({ id: req.params.id });
     let user = {};
    // console.log(req);
-    console.log(req);
+    //console.log(req);
    
   /*  if (req.user.profileId > 1 && req.params.id != req.user.id) {
         return next(new Error('Error. Insufficient access rights.'))
     }*/
 
-    if(req.headers.authorization === undefined){
+    console.log(req.headers.authorization);
+    console.log(token);
+    if(req.headers.authorization != token){
     	return next(new Error('Error. Insufficient access rights.'));
     }
     
