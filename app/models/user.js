@@ -12,15 +12,20 @@ class userModel{
 		}
 	}
 	
+	
+	
 	 authenticate() {
 	        return new Promise((resolve, reject) => {
-	        	const sqlQuery = `SELECT u.id, u.nombre, u.password from users u WHERE u.nombre = '${this.nombre}'`;
+	        	const sqlQuery = `select role_id ur, password u  from user_role ur inner join users u on ur.user_id = u.id where u.nombre = '${this.nombre}'`; 
 	        	console.log(sqlQuery);
 	            database.query(sqlQuery, (error, results, fields) => {
+	            	console.log(results);
+	            	//console.log(results.rows[0].u);
+	            	//console.log(this.password);
 	                if (!error) {
-	                    if (results.rowCount === 1  && bcrypt.compareSync(this.password, results.rows[0].password)) { //
+	                    if (results.rows[0].ur === 1  && bcrypt.compareSync(this.password, results.rows[0].u)) { //
 	                        delete results.rows[0].password;
-	                      //  resolve(results[0]);
+	                        //resolve(results.rows[0].ur);
 	                        resolve(true)
 	                    } else {
 	                        resolve(false)

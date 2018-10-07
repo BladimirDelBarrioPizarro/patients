@@ -8,7 +8,6 @@ const constants = require('../../config/constants.js');
 exports.login = async (req, res, next) => {
     const userModel = new UserModel(req.body);
     let authenticated = null;
-    console.log(userModel);
     try {
         authenticated = await userModel.authenticate();
     } catch (error) {
@@ -33,10 +32,17 @@ exports.login = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
     const userModel = new UserModel({ id: req.params.id });
     let user = {};
+   // console.log(req);
+    console.log(req);
+   
   /*  if (req.user.profileId > 1 && req.params.id != req.user.id) {
         return next(new Error('Error. Insufficient access rights.'))
+    }*/
+
+    if(req.headers.authorization === undefined){
+    	return next(new Error('Error. Insufficient access rights.'));
     }
-*/
+    
     try {
         user = await userModel.get();
     } catch (error) {
