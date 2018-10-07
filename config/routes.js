@@ -5,12 +5,13 @@ const sesionController = require('../app/controllers/sesion.js')
 
 module.exports = function(app){
 	
-	//app.post('/login', userController.login);
+	app.post('/login',userController.login);
 	
 	app.get('/users',userController.getUsers);
 	app.get('/user/:id', userController.getUser);
 	app.post('/user/',userController.createUser);
 	app.put('/user/', userController.updateUser);
+	app.put('/user/password', userController.updatePassword);
 	
 	app.get('/patients',patientController.getPatients);
 	app.get('/patient/:id',patientController.getPatient);

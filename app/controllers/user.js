@@ -4,10 +4,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 const UserModel = require('../models/user.js');
 
-/*exports.login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
     const userModel = new UserModel(req.body);
-    let authenticated = false;
-
+    let authenticated = null;
+    console.log(userModel);
     try {
         authenticated = await userModel.authenticate();
     } catch (error) {
@@ -15,7 +15,8 @@ const UserModel = require('../models/user.js');
         error.status = 403;
         return next(error)
     }
-
+    
+    console.log('authenticated '+authenticated);
     if (authenticated) {
         const token = jwt.sign({ user: authenticated }, constants.jwtSecret, { expiresIn: constants.jwtExpirationTime });
         res.setHeader('Authorization', 'Bearer ' + token);
@@ -26,7 +27,7 @@ const UserModel = require('../models/user.js');
         return next(error)
     };
 }
-*/
+
 
 exports.getUser = async (req, res, next) => {
     const userModel = new UserModel({ id: req.params.id });
@@ -126,4 +127,35 @@ exports.updateUser = async (req, res, next) => {
        // return res.status(200).send(user);
     }*/
     return res.status(200).send(user);
+}
+
+exports.updatePassword = async (req, res, next) => {
+    const userModel = new UserModel(req.body);
+
+    console.log(req.body.id);
+    //console.log(req.user.id);
+
+    /*if (req.user.profileId > 1 && req.body.id !== req.user.id) {
+        return next(new Error('Error. Insufficient access rights.'))
+    }*/
+    
+   /* try {
+        const validPassword = await userModel.checkPassword();
+        if (!validPassword) {
+            return next(new Error('Error updating user password. Wrong password.'))
+        }
+    } catch (error) {
+        return next(new Error('Error updating user password. Error checking current password.'))
+    }*/
+
+   // console.log(req.body.newPassword);
+   // userModel.password = req.body.newPassword;
+
+    try {
+        await userModel.updatePassword();
+    } catch (error) {
+        return next(new Error('Error updating user password.'))
+    }
+
+    return res.status(200).send();
 }
