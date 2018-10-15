@@ -20,7 +20,7 @@ exports.login = async (req, res, next) => {
     console.log('authenticated '+authenticated);
     if (authenticated) {
         token = jwt.sign({ user: authenticated }, constants.jwtSecret, { expiresIn: constants.jwtExpirationTime });
-        res.setHeader('Authorization', token);
+        res.setHeader('Authorization',token);
         return res.status(200).send();
     } else {
         const error = new Error('Invalid credentials.');
@@ -33,13 +33,7 @@ exports.login = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
     const userModel = new UserModel({ id: req.params.id });
     let user = {};
-   // console.log(req);
-    //console.log(req);
-   
-  /*  if (req.user.profileId > 1 && req.params.id != req.user.id) {
-        return next(new Error('Error. Insufficient access rights.'))
-    }*/
-
+  
     console.log(req.headers.authorization);
     console.log(token);
     if(req.headers.authorization != token){

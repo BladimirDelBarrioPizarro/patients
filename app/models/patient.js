@@ -26,7 +26,7 @@ class patientModel{
 	 getAll() {
 	        return new Promise((resolve, reject) => {
 	        	console.log('getAll');
-	        	const sqlQuery = `SELECT p.id, p.user_id, p.nombre, p.apellido, p.dni, p.telefono, p.direccion, p.localidad, p.profesion, p.email, p.valoracion, p.exploracion, p.diagnostico, p.tratamiento  FROM patient p`;
+	        	const sqlQuery = `SELECT p.id, p.user_id, p.nombre, p.apellido, p.dni, p.telefono, p.direccion, p.localidad, p.profesion, p.email, p.diagnostico  FROM patient p`;
 	        	console.log(sqlQuery);
 	        	database.query(sqlQuery, (error, results, fields) => {
 	                if (!error) {
@@ -44,7 +44,7 @@ class patientModel{
 	get(){
 		return new Promise((resolve, reject) => {
 			
-			const sqlQuery=`SELECT  p.id, p.user_id, p.nombre, p.apellido, p.dni, p.telefono, p.direccion, p.localidad, p.profesion, p.email, p.valoracion, p.exploracion, p.diagnostico, p.tratamiento  FROM patient p where id = ${this.id}`;
+			const sqlQuery=`SELECT  p.id, p.user_id, p.nombre, p.apellido, p.dni, p.telefono, p.direccion, p.localidad, p.profesion, p.email, p.diagnostico  FROM patient p where id = ${this.id}`;
             console.log(sqlQuery);
 			database.query(sqlQuery, (error, results, fields) => {
                 if (!error) {
@@ -59,8 +59,8 @@ class patientModel{
 	create() {
         return new Promise((req, res) => {
 
-        	const sqlQuery = `INSERT INTO patient (id,user_id,nombre,apellido,dni,telefono,direccion,localidad,profesion,email,valoracion,exploracion,diagnostico,tratamiento)
-        	    VALUES (${this.id},${this.user_id},'${this.nombre}', '${this.apellido}','${this.dni}',${this.telefono},'${this.direccion}','${this.localidad}','${this.profesion}','${this.email}','${this.valoracion}','${this.exploracion}','${this.diagnostico}','${this.tratamiento}'
+        	const sqlQuery = `INSERT INTO patient (id,user_id,nombre,apellido,dni,telefono,direccion,localidad,profesion,email,diagnostico)
+        	    VALUES (${this.id},${this.user_id},'${this.nombre}', '${this.apellido}','${this.dni}',${this.telefono},'${this.direccion}','${this.localidad}','${this.profesion}','${this.email}','${this.diagnostico}'}'
         	    )`;
         	
         	console.log(sqlQuery);
@@ -76,7 +76,7 @@ class patientModel{
     
     update() {
         return new Promise((resolve, reject) => {
-        	const sqlQuery=`UPDATE patient SET telefono = ${this.telefono}, direccion = '${this.direccion}', localidad = '${this.localidad}', profesion = '${this.profesion}', email = '${this.email}', valoracion = '${this.valoracion}', tratamiento = '${this.tratamiento}' WHERE id = ${this.id}`;
+        	const sqlQuery=`UPDATE patient SET telefono = ${this.telefono}, direccion = '${this.direccion}', localidad = '${this.localidad}', profesion = '${this.profesion}', email = '${this.email}' WHERE id = ${this.id}`;
             console.log(sqlQuery);
         	database.query(sqlQuery, (error, results, fields) => {
                 if (!error) {

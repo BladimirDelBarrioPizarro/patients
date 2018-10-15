@@ -16,7 +16,7 @@ class sesionModel{
 	getAll() {
         return new Promise((resolve, reject) => {
         	console.log('getAll sesions');
-        	const sqlQuery = `SELECT s.id, s.fecha, s.paciente_id, s.diagnostico  FROM sesion s`;
+        	const sqlQuery = `SELECT s.id, s.fecha, s.paciente_id, s.exploracion, s.valoracion, s.diagnostico, s.tratamiento  FROM sesion s`;
         	console.log(sqlQuery);
         	database.query(sqlQuery, (error, results, fields) => {
                 if (!error) {
@@ -32,7 +32,7 @@ class sesionModel{
     
     get(){
 		return new Promise((resolve, reject) => {
-			const sqlQuery=`SELECT  s.id, s.fecha, s.paciente_id, s.diagnostico  FROM sesion s where id = ${this.id}`;
+			const sqlQuery=`SELECT s.id, s.fecha, s.paciente_id, s.exploracion, s.valoracion, s.diagnostico, s.tratamiento  FROM sesion s where id = ${this.id}`;
             console.log(sqlQuery);
 			database.query(sqlQuery, (error, results, fields) => {
                 if (!error) {
@@ -46,8 +46,8 @@ class sesionModel{
 
 	create() {
         return new Promise((req, res) => {
-        	const sqlQuery = `INSERT INTO sesion (id,fecha,paciente_id,diagnostico)
-        	    VALUES (${this.id},current_date,${this.paciente_id}, '${this.diagnostico}')`;
+        	const sqlQuery = `INSERT INTO sesion (id,fecha,paciente_id,exploracion,valoracion,diagnostico,tratamiento)
+        	    VALUES (${this.id},current_date,${this.paciente_id}, '${this.exploracion}', '${this.valoracion}', '${this.diagnostico}', '${this.tratamiento}')`;
         	console.log(sqlQuery);
         	database.query(sqlQuery, (err, res) => {
         		  if (err) {
@@ -61,7 +61,7 @@ class sesionModel{
     
     update() {
         return new Promise((resolve, reject) => {
-        	const sqlQuery=`UPDATE sesion SET  diagnostico = '${this.diagnostico}' WHERE id = ${this.id}`;
+        	const sqlQuery=`UPDATE sesion SET  exploracion = '${this.exploracion}', valoracion = '${this.valoracion}', diagnostico = '${this.diagnostico}', tratamiento = '${this.tratamiento}'  WHERE id = ${this.id}`;
             console.log(sqlQuery);
         	database.query(sqlQuery, (error, results, fields) => {
                 if (!error) {
