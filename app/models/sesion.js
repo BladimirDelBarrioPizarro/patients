@@ -10,17 +10,17 @@ class sesionModel{
 			this.fecha=sesion.fecha;
 			this.paciente_id=sesion.paciente_id;
 			this.diagnostico=sesion.diagnostico;
+            this.valoracion=sesion.valoracion;
+            this.exploracion=sesion.exploracion;
+            this.tratamiento=sesion.tratamiento;
 		}
 	} //end constructor
 	
 	getAll() {
         return new Promise((resolve, reject) => {
-        	console.log('getAll sesions');
-        	const sqlQuery = `SELECT s.id, s.fecha, s.paciente_id, s.exploracion, s.valoracion, s.diagnostico, s.tratamiento  FROM sesion s`;
-        	console.log(sqlQuery);
-        	database.query(sqlQuery, (error, results, fields) => {
+            const sqlQuery = `SELECT s.id, s.fecha, s.paciente_id, s.exploracion, s.valoracion, s.diagnostico, s.tratamiento  FROM sesion s order by fecha DESC`;
+            database.query(sqlQuery, (error, results, fields) => {
                 if (!error) {
-                	console.log(results.rows[0].diagnostico);
                     resolve(results);
                 } else {
                     reject(error);
@@ -54,6 +54,7 @@ class sesionModel{
         			    console.log(err.stack)
         			  } else {
         			    console.log('Sesion created')
+                        req(res);
         			  }
         			})
         });

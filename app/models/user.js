@@ -121,7 +121,7 @@ class userModel{
         	console.log(sqlQuery);
             database.query(sqlQuery, (error, results, fields) => {
                 if (!error) {
-                    resolve(results.affectedRows);
+                    resolve(results);
                 } else {
                     reject(error);
                 }
@@ -129,6 +129,34 @@ class userModel{
         });
     };  
     
+    deleteUserRole(){
+        return new Promise((resolve, reject) => {
+            const sqlQuery = `DELETE FROM user_role WHERE user_id = ${this.id}`;
+            console.log(sqlQuery);
+            database.query(sqlQuery, (error, results, fields) => {
+                if (!error) {
+                    resolve(results.affectedRows);
+                } else {
+                    reject(error);
+                }
+            });
+        });
+    }
+
+    delete(){
+        return new Promise((resolve, reject) => {
+            const sqlQuery = `DELETE FROM users WHERE id = ${this.id}`;
+            console.log(sqlQuery);
+            database.query(sqlQuery, (error, results, fields) => {
+                if (!error) {
+                    resolve(results);
+                } else {
+                    reject(error);
+                }
+            });
+        });
+    }
+
    /* checkPassword() {
         return new Promise((resolve, reject) => {
         	const id = this.id;

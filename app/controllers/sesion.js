@@ -4,12 +4,13 @@ const SesionModel = require('../models/sesion');
 
 
 
-exports.getSesions =  (req, res, next) => {
+exports.getSesions = async  (req, res, next) => {
     const sesionModel = new SesionModel();
+    console.log(sesionModel);
     let sesions = [];
 
     try {
-        sesions =  sesionModel.getAll();
+        sesions = await sesionModel.getAll();
     } catch (error) {
         return next(new Error('Error getting sesion list.'))
     }

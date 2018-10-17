@@ -3,12 +3,13 @@ const PatientModel = require('../models/patient');
 
 
 
-exports.getPatients =  (req, res, next) => {
+exports.getPatients = async (req, res, next) => {
     const patientModel = new PatientModel();
+    console.log(patientModel);
     let patients = [];
 
     try {
-        patients =  patientModel.getAll();
+        patients = await patientModel.getAll();
     } catch (error) {
         return next(new Error('Error getting patient list.'))
     }
@@ -63,4 +64,21 @@ exports.updatePatient = async (req, res, next) => {
     } else {
         return res.status(200).send(patient);
     }
+}
+
+exports.deletePatient = async(req,res,next) =>{
+    const patientModel = new PatientModel({ id: req.params.id });
+    let patient = {};
+    let affectedRows = 0;
+
+    try {
+        patient = await patientModel.delete();
+    } catch (error) {
+        console.log(error);
+        return next(new Error('Error deleting the patient.'))
+    }
+    return res.status(200).send(patient);
+
+
+
 }

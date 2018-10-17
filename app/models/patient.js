@@ -16,28 +16,23 @@ class patientModel{
 			this.localidad=patient.localidad;
 			this.profesion=patient.profesion;
 			this.email=patient.email;
-			this.valoracion=patient.valoracion;
-			this.exploracion=patient.exploracion;
 			this.diagnostico=patient.diagnostico;
-			this.tratamiento=patient.tratamiento;
+		
 		}
 	}
 	
 	 getAll() {
-	        return new Promise((resolve, reject) => {
-	        	console.log('getAll');
-	        	const sqlQuery = `SELECT p.id, p.user_id, p.nombre, p.apellido, p.dni, p.telefono, p.direccion, p.localidad, p.profesion, p.email, p.diagnostico  FROM patient p`;
-	        	console.log(sqlQuery);
-	        	database.query(sqlQuery, (error, results, fields) => {
-	                if (!error) {
-	                	console.log(results.rows[0].id);
-	                    resolve(results);
-	                } else {
-	                    reject(error);
-	                }
-	            });
-	        });
-	    };
+        return new Promise((resolve, reject) => {
+            const sqlQuery = `SELECT id, nombre, apellido, dni, telefono, direccion, localidad, profesion, email, diagnostico from patient p order by nombre asc`;
+            database.query(sqlQuery, (error, results, fields) => {
+                if (!error) {
+                    resolve(results);
+                } else {
+                    reject(error);
+                }
+            });
+        });
+    };
 	
 	
 	
@@ -60,15 +55,15 @@ class patientModel{
         return new Promise((req, res) => {
 
         	const sqlQuery = `INSERT INTO patient (id,user_id,nombre,apellido,dni,telefono,direccion,localidad,profesion,email,diagnostico)
-        	    VALUES (${this.id},${this.user_id},'${this.nombre}', '${this.apellido}','${this.dni}',${this.telefono},'${this.direccion}','${this.localidad}','${this.profesion}','${this.email}','${this.diagnostico}'}'
-        	    )`;
+        	    VALUES (${this.id},${this.user_id},'${this.nombre}', '${this.apellido}','${this.dni}',${this.telefono},'${this.direccion}','${this.localidad}','${this.profesion}','${this.email}',${this.diagnostico})`;
         	
         	console.log(sqlQuery);
-        	database.query(sqlQuery, (err, res) => {
+        	database.query(sqlQuery, (err, results) => {
         		  if (err) {
         			    console.log(err.stack)
         			  } else {
-        			    console.log('User: '+res.rows[0].name+' created')
+        			    console.log('User: '+this.nombre+' created')
+        			    req(results)
         			  }
         			})
         });
@@ -86,8 +81,26 @@ class patientModel{
                 }
             });
         });
-    };
+    }; //end update
+
+
+    delete(){
+		return new Promise((resolve, reject) => {
+        	const sqlQuery=`DELETE FROM patient WHERE id = ${this.id}`;
+            console.log(sqlQuery);
+        	database.query(sqlQuery, (error, results, fields) => {
+                if (!error) {
+                    resolve(results);
+                } else {
+                    reject(error);
+                }
+            });
+        });
+    };//end delete
+	
+
     
 }
 
+	
 module.exports = patientModel;

@@ -99,7 +99,7 @@ exports.updateUser = async (req, res, next) => {
     const userModel = new UserModel(req.body);
     let user = req.body;
     let affectedRows = 0;
-    let existingUsers = [];
+   // let existingUsers = [];
 
   /*  try {
         existingUsers = await userModel.getByName();
@@ -163,3 +163,21 @@ exports.updatePassword = async (req, res, next) => {
 
     return res.status(200).send();
 }
+
+exports.deleteUser = async(req,res,next) =>{
+    const userModel = new UserModel({ id: req.params.id });
+    let user = {};
+    let user_role = {};
+    let affectedRows = 0;
+
+    try {
+        user_role = await userModel.deleteUserRole();
+        user = await userModel.delete();
+    } catch (error) {
+        console.log(error);
+        return next(new Error('Error deleting the user.'))
+    }
+    return res.status(200).send(user);
+}
+
+
