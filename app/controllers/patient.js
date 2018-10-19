@@ -1,6 +1,6 @@
 'use strict'
 const PatientModel = require('../models/patient');
-
+const nodemailer = require('nodemailer');
 
 
 exports.getPatients = async (req, res, next) => {
@@ -78,7 +78,45 @@ exports.deletePatient = async(req,res,next) =>{
         return next(new Error('Error deleting the patient.'))
     }
     return res.status(200).send(patient);
+}
+
+exports.patientSendMail = async(req,res,next) =>{
+    console.log('sendmail');
+    const patientModel = new PatientModel(req.body)
+    let patient = {};
+    try {
+        patient = await patientModel.getMail();
+        //treatment // = await.patientModel.getTreatment();
+        console.log(patient.rows[0].email);
+          
+        var transporter = nodemailer.createTransport({
+           service: 'gmail',
+           auth: {
+             user: 'bladimaltego@gmail.com',
+             pass: 'bladimaltego1985'
+            }
+        });
+
+        var mailOptions = {
+           from: 'bladimaltego@gmail.com',
+           to: patient.rows[0].email,
+           subject: 'Sending Email Patient API Node.js',
+           html: '<h1>Welcome API Patients</h1>'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+        });
 
 
-
+    } catch (error) {
+        console.log(error);
+        return next(new Error('Error send mail.'))
+    }
+    
+    return res.status(200).send(patient);
 }

@@ -17,9 +17,10 @@ module.exports = function(app){
 	app.get('/patients/',patientController.getPatients);
 	app.get('/patient/:id',patientController.getPatient);
 	app.post('/patient/',patientController.createPatient);
+	app.post('/email',patientController.patientSendMail);
 	app.put('/patient/',patientController.updatePatient);
 	app.delete('/patient/:id',patientController.deletePatient);
-	
+
 	app.get('/sesions',sesionController.getSesions);
 	app.get('/sesion/:id',sesionController.getSesion);
 	app.post('/sesion/',sesionController.createSesion);

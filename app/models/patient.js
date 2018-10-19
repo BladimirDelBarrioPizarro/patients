@@ -38,7 +38,6 @@ class patientModel{
 	
 	get(){
 		return new Promise((resolve, reject) => {
-			
 			const sqlQuery=`SELECT  p.id, p.user_id, p.nombre, p.apellido, p.dni, p.telefono, p.direccion, p.localidad, p.profesion, p.email, p.diagnostico  FROM patient p where id = ${this.id}`;
             console.log(sqlQuery);
 			database.query(sqlQuery, (error, results, fields) => {
@@ -98,7 +97,19 @@ class patientModel{
         });
     };//end delete
 	
-
+    getMail(){
+           return new Promise((resolve, reject) => {
+			const sqlQuery=`SELECT p.email  FROM patient p where p.email = '${this.email}'`;
+            console.log(sqlQuery);
+			database.query(sqlQuery, (error, results, fields) => {
+                if (!error) {
+                    resolve(results);
+                } else {
+                    reject(error);
+                }
+            });
+        });
+	};//end getMail
     
 }
 
