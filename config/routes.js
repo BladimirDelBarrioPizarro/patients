@@ -24,6 +24,6 @@ module.exports = function(app){
 	app.get('/sesion/:id',sesionController.getSesion);
 	app.post('/sesion/',sesionController.createSesion);
 	app.put('/sesion/',sesionController.updateSesion);
-//	app.delete('/sesion/:id',patientController.deletePatient);
+	app.delete('/sesion/:id',sesionController.deleteSesion);
 	
 }

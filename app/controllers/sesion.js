@@ -67,3 +67,17 @@ exports.updateSesion = async (req, res, next) => {
     }
 }
 
+exports.deleteSesion = async(req,res,next) =>{
+    const sesionModel = new SesionModel({ id: req.params.id });
+    let sesion = {};
+    let affectedRows = 0;
+    
+
+    try {
+        sesion = await sesionModel.delete();
+    } catch (error) {
+        console.log(error);
+        return next(new Error('Error deleting the sesion.'))
+    }
+    return res.status(200).send(sesion);
+}

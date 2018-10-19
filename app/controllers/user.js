@@ -55,10 +55,12 @@ exports.getUsers = async (req, res, next) => {
     console.log(userModel);
     let users = [];
 
-   /* if (req.user.id > 1) {
-        return next(new Error('Error. Insufficient access rights.'))
+    console.log(req.headers.authorization);
+    console.log(token);
+    if(req.headers.authorization != token){
+        return next(new Error('Error. Insufficient access rights.'));
     }
-*/
+
     try {
         users = await userModel.getAll();
     } catch (error) {
@@ -74,6 +76,12 @@ exports.createUser = async (req, res, next) => {
     let user = req.body;
     let existingUsers = [];
     
+    console.log(req.headers.authorization);
+    console.log(token);
+    if(req.headers.authorization != token){
+        return next(new Error('Error. Insufficient access rights.'));
+    }
+
     existingUsers = await userModel.getByName();
     
     console.log(existingUsers);
@@ -99,24 +107,13 @@ exports.updateUser = async (req, res, next) => {
     const userModel = new UserModel(req.body);
     let user = req.body;
     let affectedRows = 0;
-   // let existingUsers = [];
+    
+    console.log(req.headers.authorization);
+    console.log(token);
+    if(req.headers.authorization != token){
+        return next(new Error('Error. Insufficient access rights.'));
+    } 
 
-  /*  try {
-        existingUsers = await userModel.getByName();
-    } catch (error) {
-        return next(new Error('Error cheking if user exist.'))
-    }*/
-
-  /*  if ((existingUsers.length === 1 && (existingUsers[0].id !== user.id)) || existingUsers.length > 1) {
-        const error = new Error('User exist.')
-        error.status = 422;
-        return next(error)
-    }
-*/
-    /*if (req.user.profileId > 1 && user.id != req.user.id) {
-        return next(new Error('Error. Insufficient access rights.'))
-    }
-*/
     try {
         affectedRows = await userModel.update();
     } catch (error) {
@@ -124,12 +121,6 @@ exports.updateUser = async (req, res, next) => {
         return next(new Error('Error updating user.'))
     }
 
-   /* if (affectedRows === 0) {
-        return next(new Error('User not found.'))
-    } else {
-       // delete user.password;
-       // return res.status(200).send(user);
-    }*/
     return res.status(200).send(user);
 }
 
@@ -137,11 +128,11 @@ exports.updatePassword = async (req, res, next) => {
     const userModel = new UserModel(req.body);
 
     console.log(req.body.id);
-    //console.log(req.user.id);
-
-    /*if (req.user.profileId > 1 && req.body.id !== req.user.id) {
-        return next(new Error('Error. Insufficient access rights.'))
-    }*/
+    console.log(req.headers.authorization);
+    console.log(token);
+    if(req.headers.authorization != token){
+        return next(new Error('Error. Insufficient access rights.'));
+    }
     
    /* try {
         const validPassword = await userModel.checkPassword();
@@ -169,6 +160,12 @@ exports.deleteUser = async(req,res,next) =>{
     let user = {};
     let user_role = {};
     let affectedRows = 0;
+    
+    console.log(req.headers.authorization);
+    console.log(token);
+    if(req.headers.authorization != token){
+        return next(new Error('Error. Insufficient access rights.'));
+    }
 
     try {
         user_role = await userModel.deleteUserRole();

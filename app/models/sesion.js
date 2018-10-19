@@ -72,7 +72,21 @@ class sesionModel{
                 }
             });
         });
-    };
+    }; //end update
+
+    delete(){
+        return new Promise((resolve, reject) => {
+            const sqlQuery=`DELETE FROM sesion WHERE id = ${this.id}`;
+            console.log(sqlQuery);
+            database.query(sqlQuery, (error, results, fields) => {
+                if (!error) {
+                    resolve(results.affectedRows);
+                } else {
+                    reject(error);
+                }
+            });
+        });
+    }; //end update
 
 }
 
