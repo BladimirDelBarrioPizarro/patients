@@ -99,7 +99,7 @@ exports.createUser = async (req, res, next) => {
     }
     
 
-  //  delete user.password;
+
     return res.status(200).send(user);
 }
 
