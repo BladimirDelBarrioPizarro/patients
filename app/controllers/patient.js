@@ -5,7 +5,6 @@ const nodemailer = require('nodemailer');
 
 exports.getPatients = async (req, res, next) => {
     const patientModel = new PatientModel();
-    console.log(patientModel);
     let patients = [];
 
     try {
@@ -20,7 +19,6 @@ exports.getPatients = async (req, res, next) => {
 
 exports.getPatient = async (req, res, next) => {
     const patientModel = new PatientModel({ id: req.params.id });
-
     let patient = {};
 
     try {
@@ -86,7 +84,7 @@ exports.patientSendMail = async(req,res,next) =>{
     let patient = {};
     try {
         patient = await patientModel.getMail();
-        //treatment // = await.patientModel.getTreatment();
+        //treatment // = await.patientModel.getTreatment(); //select tratamiento from sesion where paciente_id = 3 and fecha = '15/09/2018'
         console.log(patient.rows[0].email);
           
         var transporter = nodemailer.createTransport({
@@ -101,7 +99,7 @@ exports.patientSendMail = async(req,res,next) =>{
            from: 'bladimaltego@gmail.com',
            to: patient.rows[0].email,
            subject: 'Sending Email Patient API Node.js',
-           html: '<h1>Welcome API Patients</h1>'
+           html: '<h1>Welcome API Patients</h1>' //treatment
         };
 
         transporter.sendMail(mailOptions, function(error, info){

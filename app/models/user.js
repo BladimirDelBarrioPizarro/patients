@@ -17,9 +17,7 @@ class userModel{
 	 authenticate() {
 	        return new Promise((resolve, reject) => {
 	        	const sqlQuery = `select role_id ur, password u  from user_role ur inner join users u on ur.user_id = u.id where u.nombre = '${this.nombre}'`; 
-	        	console.log(sqlQuery);
 	            database.query(sqlQuery, (error, results, fields) => {
-	            	console.log(results);
 	            	//console.log(results.rows[0].u);
 	            	//console.log(this.password);
 	                if (!error) {
@@ -157,17 +155,12 @@ class userModel{
         });
     }
 
-   /* checkPassword() {
+    checkPassword() {
         return new Promise((resolve, reject) => {
-        	const id = this.id;
-        	const sqlQuery = `SELECT u.password FROM users u WHERE u.id = ${id}`;
-        	console.log(sqlQuery);
+        	const sqlQuery = `SELECT u.password FROM users u WHERE u.nombre = '${this.nombre}'`;
             database.query(sqlQuery, (error, results, fields) => {
-            	//console.log(results.length);
-            	//console.log(results[0].password);
-            	console.log(error);
                 if (!error) {
-                    if (results.length === 1 && bcrypt.compareSync(this.password, results[0].password)) {
+                    if (results.rowCount === 1 && bcrypt.compareSync(this.password, results.rows[0].password)) {
                         resolve(true);
                     } else {
                         resolve(false)
@@ -177,7 +170,7 @@ class userModel{
                 }
             });
         });
-    };*/
+    };
 }
         
 	module.exports=userModel;

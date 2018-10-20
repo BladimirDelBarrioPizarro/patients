@@ -1,7 +1,7 @@
 const userController = require('../app/controllers/user.js');
 const patientController = require('../app/controllers/patient.js')
 const sesionController = require('../app/controllers/sesion.js')
-
+const billingController = require('../app/controllers/billing.js')
 
 module.exports = function(app){
 	
@@ -26,5 +26,7 @@ module.exports = function(app){
 	app.post('/sesion/',sesionController.createSesion);
 	app.put('/sesion/',sesionController.updateSesion);
 	app.delete('/sesion/:id',sesionController.deleteSesion);
+
+	app.get('/billings',billingController.getBillings);
 	
 }

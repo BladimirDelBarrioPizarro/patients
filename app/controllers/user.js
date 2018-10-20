@@ -9,8 +9,11 @@ var token;
 exports.login = async (req, res, next) => {
     const userModel = new UserModel(req.body);
     let authenticated = null;
+    let checkPassword = null;
+
     try {
         authenticated = await userModel.authenticate();
+        checkPassword = await userModel.checkPassword();
     } catch (error) {
         error.message = 'Error authenticating user.';
         error.status = 403;
@@ -18,7 +21,7 @@ exports.login = async (req, res, next) => {
     }
     
     console.log('authenticated '+authenticated);
-    if (authenticated) {
+    if (authenticated && checkPassword) { //&& checkPassword
         token = jwt.sign({ user: authenticated }, constants.jwtSecret, { expiresIn: constants.jwtExpirationTime });
         res.setHeader('Authorization',token);
         return res.status(200).send();

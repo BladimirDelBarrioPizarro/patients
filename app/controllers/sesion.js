@@ -21,7 +21,6 @@ exports.getSesions = async  (req, res, next) => {
 
 exports.getSesion = async (req, res, next) => {
     const sesionModel = new SesionModel({ id: req.params.id });
-
     let sesion = {};
 
     try {
@@ -53,7 +52,7 @@ exports.updateSesion = async (req, res, next) => {
     const sesionModel = new SesionModel(req.body);
     let sesion = req.body;
     let affectedRows = 0;
-    console.log(sesion);
+    
     try {
         affectedRows = await sesionModel.update();
     } catch (error) {
